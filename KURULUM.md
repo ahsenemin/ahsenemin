@@ -1,8 +1,8 @@
 # Kurulum ve Kullanim Rehberi
 
-Bu klasordeki her sey test edildi ve calisiyor (contributions cekme scripti
-gercek bir GitHub profiliyle, heatmap ve info-card render'lari gorsel olarak,
-ASCII donusumu de ornek bir fotografla dogrulandi).
+Bu klasordeki her sey test edildi ve calisiyor (heatmap ve info-card
+render'lari gorsel olarak, ASCII donusumu de ornek bir fotografla
+dogrulandi).
 
 ## 0) Onkosul: "profil reposu"
 
@@ -30,10 +30,8 @@ source .venv/bin/activate
 pip install -r scripts/requirements.txt
 ```
 
-Not: `rembg`, `pillow`, `opencv-python-headless` gibi kutuphaneler sadece
-portre olustururken lokalde gerekiyor. Gunluk otomasyon (GitHub Actions)
-sadece `requests` + `beautifulsoup4` kullaniyor, o yuzden workflow dosyasi
-bu agir kutuphaneleri kurmuyor.
+`rembg`, `pillow`, `opencv-python-headless` gibi kutuphaneler portre
+olustururken lokalde gerekiyor.
 
 `rembg` ilk calistiginda ~176MB'lik bir model dosyasini
 (u2net.onnx, GitHub release'inden) otomatik indirir - internet baglantisi
@@ -66,37 +64,19 @@ python scripts/make_info_card.py
 STATIC=1 python scripts/make_info_card.py
 ```
 
-## 5) Contribution heatmap'i olustur
+## 5) README'yi yerlestir
 
-```
-python scripts/fetch_contributions.py
-python scripts/render_heatmap_svg.py
-```
+`README.md` iki SVG'yi ortali, terminal gorunumlu bir duzende
+yerlestiriyor: ascii(370) + info-card(490). Kendi tercihine gore
+basliklardaki fake shell komutlarini degistirebilirsin.
 
-Ilk komut token/auth gerektirmeden `github.com/users/<kullanici>/contributions`
-adresindeki genel HTML'i cekip `data/contributions.json`'a yazar (gunluk
-sayilar, seviye 0-4, ve toplam/seri istatistikleri). Ikinci komut bunu
-`contrib-heatmap.svg` olarak render eder - koseden kosegen sekilde,
-satir satir asagi kayarak beliren kutucuklar.
-
-## 6) README'yi yerlestir
-
-`README.md` zaten uc SVG'yi ortali, terminal gorunumlu bir duzende
-yerlestiriyor. Genislikler hizali kalsin diye heatmap 860px = ascii(370) +
-info-card(490). Kendi tercihine gore basliklardaki fake shell komutlarini
-degistirebilirsin.
-
-## 7) Push et ve Actions'i ac
+## 6) Push et
 
 ```
 git add -A
-git commit -m "profil sanati: ascii portre + neofetch kart + heatmap"
+git commit -m "profil sanati: ascii portre + neofetch kart"
 git push
 ```
-
-Repoya girdikten sonra **Actions** sekmesinden workflow'u bir kere elle
-tetikle (`Run workflow` / `workflow_dispatch`) ve heatmap'in commit
-edildigini dogrula. Sonrasinda her gun ~06:17 UTC'de otomatik yenilenir.
 
 ## GitHub markdown'in bilmen gereken tuhafliklari
 
@@ -106,7 +86,7 @@ edildigini dogrula. Sonrasinda her gun ~06:17 UTC'de otomatik yenilenir.
   `<h3>` kullan.
 - JavaScript hic calismiyor, harici CSS de engelli - butun animasyon
   SVG'lerin icinde (SMIL `<animate>` / CSS `@keyframes`) olmak zorunda.
-  Bu yuzden her uc script animasyonu dogrudan SVG'nin icine gomuyor.
+  Bu yuzden her iki script animasyonu dogrudan SVG'nin icine gomuyor.
 
 ## Ozet - dosya haritasi
 
@@ -116,7 +96,4 @@ edildigini dogrula. Sonrasinda her gun ~06:17 UTC'de otomatik yenilenir.
 | `scripts/prep_photo.py` | Foto -> arka plan silme + kontrast + beyaz zemin |
 | `scripts/make_ascii_svg.py` | Prepped foto -> kendini yazan ASCII SVG |
 | `scripts/make_info_card.py` | neofetch tarzi bilgi karti SVG |
-| `scripts/fetch_contributions.py` | GitHub contributions HTML'ini token'siz ceker |
-| `scripts/render_heatmap_svg.py` | JSON -> animasyonlu heatmap SVG |
-| `.github/workflows/update-profile-art.yml` | Heatmap'i her gun otomatik yeniler |
-| `README.md` | Uc SVG'yi terminal gorunumlu duzende birlestirir |
+| `README.md` | Iki SVG'yi terminal gorunumlu duzende birlestirir |
