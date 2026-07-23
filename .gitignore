@@ -1,0 +1,11 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Islenmis yuz fotografi - public yapilmiyor (ASCII SVG yeterli)
+source-prepped.png
+source-photo.jpg
+
+# macOS
+.DS_Store

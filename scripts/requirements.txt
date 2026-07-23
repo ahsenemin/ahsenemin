@@ -1,0 +1,10 @@
+# Gunluk otomasyon (GitHub Actions) icin yeterli:
+requests==2.32.3
+beautifulsoup4==4.12.3
+
+# Sadece portre olustururken (lokalde) gerekli - workflow bunlari kullanmaz:
+pillow
+numpy
+opencv-python-headless
+rembg
+onnxruntime
